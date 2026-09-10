@@ -138,6 +138,13 @@ a {
   font-size: 2.5rem;
   margin: 0 0 1rem;
   color: var(--color-primary);
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.85rem;
+  }
 }
 
 .hero p {
