@@ -13,12 +13,52 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   margin: 0;
   font-family: var(--font-base);
   color: var(--color-text);
   background: var(--color-bg);
   line-height: 1.6;
+}
+
+/* Scroll-reveal: only active once JS has confirmed and set up the observer,
+   so content stays fully visible with JS disabled. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero p.reveal {
+  transition-delay: 0.1s;
+}
+
+.hero .btn.reveal {
+  transition-delay: 0.2s;
+}
+
+.card-grid .card:nth-child(2) {
+  transition-delay: 0.12s;
 }
 
 img {
@@ -55,6 +95,11 @@ a {
 
 .site-header .logo img {
   height: 48px;
+  transition: transform 0.25s ease;
+}
+
+.site-header .logo:hover img {
+  transform: scale(1.04);
 }
 
 .nav ul {
@@ -66,13 +111,30 @@ a {
 }
 
 .nav a {
+  position: relative;
   text-decoration: none;
   color: var(--color-primary);
   font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: var(--color-accent);
+  transition: width 0.25s ease;
 }
 
 .nav a:hover {
   color: var(--color-accent);
+}
+
+.nav a:hover::after {
+  width: 100%;
 }
 
 /* Mobile nav uses <details>/<summary>, no JS required */
@@ -116,6 +178,12 @@ a {
   text-decoration: none;
   color: var(--color-primary);
   font-weight: 500;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.nav-mobile-panel a:hover {
+  color: var(--color-accent);
+  padding-left: 0.25rem;
 }
 
 @media (max-width: 768px) {
@@ -162,12 +230,14 @@ a {
   border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
-  transition: background 0.2s ease;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .btn:hover {
   background: var(--color-accent);
   color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(30, 47, 63, 0.18);
 }
 
 /* Sections */
@@ -206,11 +276,23 @@ a {
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 16px rgba(30, 47, 63, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-accent);
+  box-shadow: 0 16px 32px rgba(30, 47, 63, 0.1);
 }
 
 .card h3 {
   color: var(--color-primary);
   margin-top: 0;
+  transition: color 0.3s ease;
+}
+
+.card:hover h3 {
+  color: var(--color-accent);
 }
 
 .card p {
@@ -236,6 +318,14 @@ a {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--color-primary);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.contact a.email:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 .contact .address {
@@ -265,6 +355,11 @@ a {
   color: var(--color-text-muted);
   text-decoration: none;
   margin-left: 1.5rem;
+  transition: color 0.2s ease;
+}
+
+.site-footer nav a:hover {
+  color: var(--color-accent);
 }
 
 .site-footer small {
@@ -277,15 +372,86 @@ a {
 /* Impressum page */
 .legal h1 {
   color: var(--color-primary);
+  margin-bottom: 2rem;
 }
 
-.legal h2 {
+.legal-card {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--color-bg);
+  border: 1px solid #e5e8ea;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(30, 47, 63, 0.05);
+  overflow: hidden;
+}
+
+.legal-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1rem 2rem;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.legal-row:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 560px) {
+  .legal-row {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+    padding: 1.25rem 1.5rem;
+  }
+}
+
+.legal-label {
   color: var(--color-primary);
-  font-size: 1.25rem;
-  margin-top: 2rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.legal-value {
+  color: var(--color-text-muted);
+}
+
+.legal-value a {
+  color: var(--color-accent);
+}
+
+.legal-value p {
+  margin: 0 0 0.75rem;
+}
+
+.legal-value p:last-child {
+  margin-bottom: 0;
 }
 
 .legal .placeholder {
+  display: inline-block;
   font-style: italic;
-  color: #b23b3b;
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  background: rgba(91, 114, 136, 0.08);
+  border: 1px dashed rgba(91, 114, 136, 0.4);
+  border-radius: 6px;
+  padding: 0.15rem 0.6rem;
+}
+
+.legal-note {
+  max-width: 720px;
+  margin: 3rem auto 0;
+}
+
+.legal-note h2 {
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.legal-note p {
+  color: var(--color-text-muted);
+  text-align: left;
 }
