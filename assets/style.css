@@ -197,30 +197,9 @@ a {
 
 /* Hero */
 .hero {
-  position: relative;
   padding: 5rem 0;
   text-align: center;
   background: linear-gradient(180deg, var(--color-bg-alt), var(--color-bg));
-  overflow: hidden;
-}
-
-.hero-waves {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-waves path {
-  fill: none;
-  stroke: var(--color-accent);
-}
-
-.hero .container {
-  position: relative;
-  z-index: 1;
 }
 
 .hero h1 {
@@ -259,29 +238,6 @@ a {
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(30, 47, 63, 0.18);
-}
-
-/* Wave divider — echoes the flowing line under the house in the logo,
-   used as a soft transition between sections instead of a hard edge. */
-.wave-divider {
-  display: block;
-  width: 100%;
-  height: 32px;
-  line-height: 0;
-}
-
-.wave-divider svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.wave-divider path {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: 2;
-  opacity: 0.45;
-  vector-effect: non-scaling-stroke;
 }
 
 /* Sections */
